@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUPP Cryptography Course - ITE Department</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --rupp-red: #C0392B;
+            --rupp-gold: #D4AC0D;
+            --rupp-dark: #1a1a2e;
+            --rupp-navy: #16213e;
+            --rupp-charcoal: #2d3436;
+            --text-primary: #2c3e50;
+            --text-secondary: #5d6d7e;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--rupp-dark) 0%, var(--rupp-navy) 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo-container {
+            background: white;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .header-info h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-info p {
+            font-size: 0.9rem;
+            color: var(--rupp-gold);
+            margin: 0.15rem 0;
+        }
+
+        .team-badge {
+            background: var(--rupp-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0 2rem;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-list a {
+            color: white;
+            text-decoration: none;
+            padding: 0.875rem 1.25rem;
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-list a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-color: var(--rupp-gold);
+        }
+
+        .nav-list a i {
+            margin-right: 0.5rem;
+            color: var(--rupp-gold);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--rupp-dark) 0%, var(--rupp-navy) 50%, var(--rupp-charcoal) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--rupp-gold);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--rupp-gold);
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: var(--rupp-red);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--rupp-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Cipher Grid */
+        .cipher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .cipher-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cipher Card */
+        .cipher-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .cipher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cipher-header {
+            background: linear-gradient(135deg, var(--rupp-red) 0%, #922b21 100%);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cipher-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .cipher-title {
+            flex: 1;
+        }
+
+        .cipher-title h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cipher-title span {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .cipher-body {
+            padding: 1.5rem;
+        }
+
+        /* Accordion */
+        .accordion {
+            margin-bottom: 1.5rem;
+        }
+
+        .accordion-header {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: #e9ecef;
+        }
+
+        .accordion-header.active {
+            background: var(--rupp-navy);
+            color: white;
+            border-color: var(--rupp-navy);
+        }
+
+        .accordion-header h4 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: var(--bg-light);
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+
+        .accordion-content.active {
+            max-height: 1000px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        .accordion-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .formula-box {
+            background: var(--rupp-dark);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .letter-mapping {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .mapping-pair {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 0.4rem 0.6rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .mapping-pair .arrow {
+            color: var(--rupp-red);
+            margin: 0 0.25rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-group label i {
+            color: var(--rupp-red);
+            margin-right: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--rupp-red);
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .error-message {
+            color: var(--rupp-red);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Button Styles */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: var(--rupp-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #922b21;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--rupp-navy);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0f1535;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--rupp-red);
+            border: 2px solid var(--rupp-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--rupp-red);
+            color: white;
+        }
+
+        /* Output Display */
+        .output-container {
+            background: var(--bg-light);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            padding: 1rem;
+            min-height: 80px;
+        }
+
+        .output-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .output-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: var(--rupp-dark);
+            word-break: break-all;
+            min-height: 1.5rem;
+        }
+
+        .output-text.empty {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        /* Video Container */
+        .video-container {
+            margin-top: 1.5rem;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--rupp-dark);
+        }
+
+        .video-header {
+            background: var(--rupp-charcoal);
+            color: white;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-header i {
+            color: var(--rupp-red);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* RSA Section Special Styling */
+        .rsa-steps {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rsa-steps h5 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--rupp-dark);
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step;
+        }
+
+        .step-list li {
+            counter-increment: step;
+            padding: 0.75rem 0;
+            padding-left: 3rem;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .step-list li:last-child {
+            border-bottom: none;
+        }
+
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2rem;
+            height: 2rem;
+            background: var(--rupp-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .step-formula {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--rupp-red);
+        }
+
+        .rsa-demo-output {
+            background: var(--rupp-dark);
+            color: white;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .rsa-demo-output h5 {
+            color: var(--rupp-gold);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .key-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .key-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+        }
+
+        .key-item label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .key-item value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--rupp-gold);
+        }
+
+        .calculation-steps {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .calculation-steps h6 {
+            color: var(--rupp-gold);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .calc-step {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calc-step:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--rupp-dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--rupp-gold);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section li {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-section i {
+            color: var(--rupp-red);
+            width: 20px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .footer-bottom .team-name {
+            color: var(--rupp-gold);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
+
+            .navbar {
+                display: none;
+                padding: 0;
+            }
+
+            .navbar.active {
+                display: block;
+            }
+
+            .nav-list {
+                flex-direction: column;
+            }
+
+            .nav-list a {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .cipher-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .key-display {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cipher-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .cipher-card:nth-child(1) { animation-delay: 0.1s; }
+        .cipher-card:nth-child(2) { animation-delay: 0.2s; }
+        .cipher-card:nth-child(3) { animation-delay: 0.3s; }
+        .cipher-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Success/Error States */
+        .success {
+            color: #27ae60;
+        }
+
+        .error {
+            color: var(--rupp-red);
+        }
+
+        /* Copy button */
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            margin-left: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--rupp-red);
+        }
+
+        /* Prime suggestion */
+        .prime-suggestion {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .prime-suggestion span {
+            display: inline-block;
+            background: var(--bg-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin: 0.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .prime-suggestion span:hover {
+            background: var(--rupp-red);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="rupp_logo.png" alt="RUPP Logo">
+                </div>
+                <div class="header-info">
+                    <h1>Royal University of Phnom Penh</h1>
+                    <p><i class="fas fa-graduation-cap"></i> ITE Department</p>
+                    <p><i class="fas fa-chalkboard-teacher"></i> Lecturer: Lim Seyha</p>
+                </div>
+            </div>
+            <div class="team-badge">
+                <i class="fas fa-users"></i>
+                The 6 Crusaders
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="navbar" id="navbar">
+            <ul class="nav-list">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#classical"><i class="fas fa-scroll"></i> Classical Cryptography</a></li>
+                <li><a href="#rsa"><i class="fas fa-key"></i> RSA Cryptography</a></li>
+                <li><a href="#misc"><i class="fas fa-puzzle-piece"></i> Miscellaneous</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2><i class="fas fa-shield-alt"></i> Mathematics & Cryptography</h2>
+            <p>Explore the fascinating world of encryption algorithms, from ancient ciphers to modern RSA. 
+               Learn how mathematics secures our digital world through interactive demonstrations.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="number">8</span>
+                    <span class="label">Cipher Algorithms</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">3</span>
+                    <span class="label">Main Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">∞</span>
+                    <span class="label">Possibilities</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classical Cryptography Section -->
+    <section class="section" id="classical">
+        <div class="section-header">
+            <span class="section-label">Section 1</span>
+            <h2 class="section-title">Classical Cryptography</h2>
+            <p class="section-description">
+                Explore the foundations of cryptography with classical ciphers that have been used for millennia. 
+                These substitution and transposition techniques form the basis of modern encryption.
+            </p>
+        </div>
+
+        <div class="cipher-grid">
+            <!-- Caesar Cipher -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>Caesar Cipher</h3>
+                        <span>Fixed Shift of 3</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The Caesar Cipher is a substitution cipher where each letter in the plaintext is shifted a fixed number of places down the alphabet. Julius Caesar famously used a shift of 3.</p>
+                            <div class="formula-box">E(x) = (x + 3) mod 26<br>D(x) = (x - 3) mod 26</div>
+                            <p><strong>Letter Mapping (Shift = 3):</strong></p>
+                            <div class="letter-mapping" id="caesar-mapping"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Plaintext / Ciphertext</label>
+                        <textarea class="form-control" id="caesar-input" placeholder="Enter text to encrypt or decrypt..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="caesarEncrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                        <button class="btn btn-secondary" onclick="caesarDecrypt()">
+                            <i class="fas fa-lock-open"></i> Decrypt
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('caesar-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="caesar-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Shift Cipher -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>General Shift Cipher</h3>
+                        <span>Custom Shift Value</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The General Shift Cipher extends the Caesar Cipher by allowing any shift value from 0 to 25. This provides 25 unique encryption schemes (shift 0 leaves text unchanged).</p>
+                            <div class="formula-box">E(x) = (x + k) mod 26<br>D(x) = (x - k) mod 26<br>where k = shift value (0-25)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-sliders-h"></i> Shift Value (0-25)</label>
+                        <input type="number" class="form-control" id="shift-value" min="0" max="25" value="3" placeholder="Enter shift (0-25)">
+                        <p class="input-hint">Enter a number between 0 and 25</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Plaintext / Ciphertext</label>
+                        <textarea class="form-control" id="shift-input" placeholder="Enter text to encrypt or decrypt..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="shiftEncrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                        <button class="btn btn-secondary" onclick="shiftDecrypt()">
+                            <i class="fas fa-lock-open"></i> Decrypt
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('shift-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="shift-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affine Cipher -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>Affine Cipher</h3>
+                        <span>Linear Transformation</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The Affine Cipher uses a linear function for encryption. It requires two keys: 'a' (must be coprime with 26) and 'b' (any value 0-25). The multiplicative inverse of 'a' modulo 26 is needed for decryption.</p>
+                            <div class="formula-box">E(x) = (ax + b) mod 26<br>D(x) = a⁻¹(x - b) mod 26<br>where gcd(a, 26) = 1</div>
+                            <p><strong>Valid 'a' values (coprime with 26):</strong> 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25</p>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-key"></i> Key 'a'</label>
+                            <input type="number" class="form-control" id="affine-a" min="1" max="25" value="5" placeholder="a">
+                            <p class="input-hint">Must be coprime with 26</p>
+                            <p class="error-message" id="affine-a-error">Error: gcd(a, 26) must equal 1</p>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-key"></i> Key 'b'</label>
+                            <input type="number" class="form-control" id="affine-b" min="0" max="25" value="8" placeholder="b">
+                            <p class="input-hint">Any value 0-25</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Plaintext / Ciphertext</label>
+                        <textarea class="form-control" id="affine-input" placeholder="Enter text to encrypt or decrypt..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="affineEncrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                        <button class="btn btn-secondary" onclick="affineDecrypt()">
+                            <i class="fas fa-lock-open"></i> Decrypt
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('affine-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="affine-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transposition Cipher -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>Transposition Cipher</h3>
+                        <span>Columnar Transposition</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The Columnar Transposition Cipher rearranges letters by writing text in rows and reading off columns. Unlike substitution ciphers, it preserves letter frequency but changes their positions.</p>
+                            <div class="formula-box">1. Write plaintext in rows of length = key<br>2. Read columns in order of key letters<br>3. For numeric key: read columns left to right</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-key"></i> Keyword / Number of Columns</label>
+                        <input type="text" class="form-control" id="transposition-key" value="CRYPTO" placeholder="Enter keyword or number">
+                        <p class="input-hint">Letters will be sorted alphabetically to determine column order</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Plaintext / Ciphertext</label>
+                        <textarea class="form-control" id="transposition-input" placeholder="Enter text to encrypt or decrypt..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="transpositionEncrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                        <button class="btn btn-secondary" onclick="transpositionDecrypt()">
+                            <i class="fas fa-lock-open"></i> Decrypt
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('transposition-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="transposition-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSA Cryptography Section -->
+    <section class="section" id="rsa">
+        <div class="section-header">
+            <span class="section-label">Section 2</span>
+            <h2 class="section-title">RSA Cryptography</h2>
+            <p class="section-description">
+                RSA is a public-key cryptosystem widely used for secure data transmission. 
+                It uses the mathematical properties of large prime numbers to enable encryption and digital signatures.
+            </p>
+        </div>
+
+        <div class="cipher-card" style="max-width: 900px; margin: 0 auto;">
+            <div class="cipher-header">
+                <div class="cipher-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="cipher-title">
+                    <h3>RSA Encryption & Decryption</h3>
+                    <span>Public-Key Cryptosystem</span>
+                </div>
+            </div>
+            <div class="cipher-body">
+                <div class="accordion">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="rsa-steps">
+                            <h5><i class="fas fa-cogs"></i> Key Generation Steps:</h5>
+                            <ol class="step-list">
+                                <li>Choose two distinct prime numbers: <span class="step-formula">p</span> and <span class="step-formula">q</span></li>
+                                <li>Compute <span class="step-formula">n = p × q</span> (modulus for public and private keys)</li>
+                                <li>Compute Euler's totient: <span class="step-formula">φ(n) = (p-1) × (q-1)</span></li>
+                                <li>Choose public exponent <span class="step-formula">e</span> such that <span class="step-formula">1 < e < φ(n)</span> and <span class="step-formula">gcd(e, φ(n)) = 1</span></li>
+                                <li>Compute private exponent <span class="step-formula">d</span> where <span class="step-formula">d × e ≡ 1 (mod φ(n))</span></li>
+                            </ol>
+                        </div>
+                        <div class="formula-box">
+                            <strong>Public Key:</strong> (e, n)<br>
+                            <strong>Private Key:</strong> (d, n)<br>
+                            <strong>Encryption:</strong> c = mᵉ mod n<br>
+                            <strong>Decryption:</strong> m = cᵈ mod n
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-prime"></i> Prime p</label>
+                        <input type="number" class="form-control" id="rsa-p" value="3" placeholder="Enter prime p">
+                        <p class="prime-suggestion">Try: <span onclick="setPrime('rsa-p', 3)">3</span> <span onclick="setPrime('rsa-p', 5)">5</span> <span onclick="setPrime('rsa-p', 7)">7</span> <span onclick="setPrime('rsa-p', 11)">11</span> <span onclick="setPrime('rsa-p', 13)">13</span></p>
+                        <p class="error-message" id="rsa-p-error">Please enter a valid prime number</p>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-prime"></i> Prime q</label>
+                        <input type="number" class="form-control" id="rsa-q" value="11" placeholder="Enter prime q">
+                        <p class="prime-suggestion">Try: <span onclick="setPrime('rsa-q', 3)">3</span> <span onclick="setPrime('rsa-q', 5)">5</span> <span onclick="setPrime('rsa-q', 7)">7</span> <span onclick="setPrime('rsa-q', 11)">11</span> <span onclick="setPrime('rsa-q', 13)">13</span></p>
+                        <p class="error-message" id="rsa-q-error">Please enter a valid prime number</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Message (numeric, m &lt; n)</label>
+                    <input type="number" class="form-control" id="rsa-message" value="7" placeholder="Enter numeric message">
+                    <p class="input-hint">Message must be less than n = p × q</p>
+                    <p class="error-message" id="rsa-msg-error">Message must be less than n</p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="rsaEncrypt()">
+                        <i class="fas fa-lock"></i> Generate Keys & Encrypt
+                    </button>
+                    <button class="btn btn-secondary" onclick="rsaDecrypt()">
+                        <i class="fas fa-lock-open"></i> Decrypt
+                    </button>
+                </div>
+
+                <div class="rsa-demo-output" id="rsa-output" style="display: none;">
+                    <h5><i class="fas fa-key"></i> Generated Keys</h5>
+                    <div class="key-display">
+                        <div class="key-item">
+                            <label>Public Key (e, n)</label>
+                            <value id="rsa-public-key">-</value>
+                        </div>
+                        <div class="key-item">
+                            <label>Private Key (d, n)</label>
+                            <value id="rsa-private-key">-</value>
+                        </div>
+                    </div>
+                    <div class="key-display">
+                        <div class="key-item">
+                            <label>Original Message (m)</label>
+                            <value id="rsa-original">-</value>
+                        </div>
+                        <div class="key-item">
+                            <label>Encrypted (c)</label>
+                            <value id="rsa-encrypted">-</value>
+                        </div>
+                        <div class="key-item">
+                            <label>Decrypted (m')</label>
+                            <value id="rsa-decrypted">-</value>
+                        </div>
+                    </div>
+                    <div class="calculation-steps" id="rsa-steps"></div>
+                </div>
+
+                <div class="video-container">
+                    <div class="video-header">
+                        <i class="fas fa-play-circle"></i> Tutorial Video
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Miscellaneous Section -->
+    <section class="section" id="misc">
+        <div class="section-header">
+            <span class="section-label">Section 3</span>
+            <h2 class="section-title">Miscellaneous Ciphers</h2>
+            <p class="section-description">
+                Additional encryption methods including the Vigenère polyalphabetic cipher and Base64 encoding, 
+                demonstrating different approaches to data transformation and security.
+            </p>
+        </div>
+
+        <div class="cipher-grid">
+            <!-- Vigenère Cipher -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-th"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>Vigenère Cipher</h3>
+                        <span>Polyalphabetic Substitution</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>The Vigenère Cipher uses a keyword to apply different Caesar shifts to each letter. This makes it much more secure than simple substitution ciphers as the same plaintext letter can encrypt to different ciphertext letters.</p>
+                            <div class="formula-box">E(xᵢ) = (xᵢ + kᵢ) mod 26<br>D(xᵢ) = (xᵢ - kᵢ) mod 26<br>where kᵢ = key[i mod key_length]</div>
+                            <p>Uses a Vigenère square (tabula recta) where each row represents a Caesar cipher with shift equal to the row number.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-key"></i> Keyword</label>
+                        <input type="text" class="form-control" id="vigenere-key" value="KEY" placeholder="Enter keyword">
+                        <p class="input-hint">Only letters A-Z, case insensitive</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Plaintext / Ciphertext</label>
+                        <textarea class="form-control" id="vigenere-input" placeholder="Enter text to encrypt or decrypt..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="vigenereEncrypt()">
+                            <i class="fas fa-lock"></i> Encrypt
+                        </button>
+                        <button class="btn btn-secondary" onclick="vigenereDecrypt()">
+                            <i class="fas fa-lock-open"></i> Decrypt
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('vigenere-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="vigenere-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Base64 Encoding -->
+            <div class="cipher-card">
+                <div class="cipher-header">
+                    <div class="cipher-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="cipher-title">
+                        <h3>Base64 Encoding</h3>
+                        <span>Binary-to-Text Encoding</span>
+                    </div>
+                </div>
+                <div class="cipher-body">
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4><i class="fas fa-info-circle"></i> How It Works</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Base64 is a binary-to-text encoding scheme that represents binary data in ASCII string format. It uses 64 printable characters (A-Z, a-z, 0-9, +, /) and padding (=).</p>
+                            <div class="formula-box">1. Convert text to binary (8 bits per char)<br>2. Group into 6-bit chunks<br>3. Map each 6-bit value to Base64 character<br>4. Pad with '=' if needed</div>
+                            <p>Commonly used for encoding data in URLs, email attachments, and embedding binary data in text formats like JSON and XML.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-edit"></i> Input Text</label>
+                        <textarea class="form-control" id="base64-input" placeholder="Enter text to encode or decode..."></textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="base64Encode()">
+                            <i class="fas fa-arrow-up"></i> Encode
+                        </button>
+                        <button class="btn btn-secondary" onclick="base64Decode()">
+                            <i class="fas fa-arrow-down"></i> Decode
+                        </button>
+                    </div>
+
+                    <div class="output-container">
+                        <div class="output-label">
+                            <i class="fas fa-result"></i> Result
+                            <button class="copy-btn" onclick="copyToClipboard('base64-output')" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="output-text empty" id="base64-output">Result will appear here...</div>
+                    </div>
+
+                    <div class="video-container">
+                        <div class="video-header">
+                            <i class="fas fa-play-circle"></i> Tutorial Video
+                        </div>
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-university"></i> Institution</h4>
+                <ul>
+                    <li><i class="fas fa-building"></i> Royal University of Phnom Penh</li>
+                    <li><i class="fas fa-laptop-code"></i> ITE Department</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Phnom Penh, Cambodia</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-users"></i> Course Information</h4>
+                <ul>
+                    <li><i class="fas fa-book"></i> Subject: Mathematics / Cryptography</li>
+                    <li><i class="fas fa-chalkboard-teacher"></i> Lecturer: Lim Seyha</li>
+                    <li><i class="fas fa-user-graduate"></i> Team: <span class="team-name">The 6 Crusaders</span></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul>
+                    <li><i class="fas fa-home"></i> <a href="#home" style="color: white; text-decoration: none;">Home</a></li>
+                    <li><i class="fas fa-scroll"></i> <a href="#classical" style="color: white; text-decoration: none;">Classical Ciphers</a></li>
+                    <li><i class="fas fa-key"></i> <a href="#rsa" style="color: white; text-decoration: none;">RSA</a></li>
+                    <li><i class="fas fa-puzzle-piece"></i> <a href="#misc" style="color: white; text-decoration: none;">Miscellaneous</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 <span class="team-name">The 6 Crusaders</span> | ITE Department | Royal University of Phnom Penh</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem;">Created for Mathematics / Cryptography course under the guidance of Lecturer Lim Seyha</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== UTILITY FUNCTIONS ====================
+        
+        function toggleMenu() {
+            document.getElementById('navbar').classList.toggle('active');
+        }
+
+        function toggleAccordion(header) {
+            header.classList.toggle('active');
+            header.nextElementSibling.classList.toggle('active');
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            if (text && text !== 'Result will appear here...') {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Copied to clipboard!');
+                });
+            }
+        }
+
+        function setPrime(inputId, value) {
+            document.getElementById(inputId).value = value;
+        }
+
+        // ==================== CAESAR CIPHER ====================
+        
+        function caesarShift(char, shift) {
+            if (!/[a-zA-Z]/.test(char)) return char;
+            const base = char === char.toUpperCase() ? 65 : 97;
+            return String.fromCharCode(((char.charCodeAt(0) - base + shift + 26) % 26) + base);
+        }
+
+        function caesarEncrypt() {
+            const input = document.getElementById('caesar-input').value;
+            const result = input.split('').map(c => caesarShift(c, 3)).join('');
+            const output = document.getElementById('caesar-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        function caesarDecrypt() {
+            const input = document.getElementById('caesar-input').value;
+            const result = input.split('').map(c => caesarShift(c, -3)).join('');
+            const output = document.getElementById('caesar-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        // Generate Caesar mapping display
+        function generateCaesarMapping() {
+            const mapping = document.getElementById('caesar-mapping');
+            let html = '';
+            for (let i = 0; i < 26; i++) {
+                const plain = String.fromCharCode(65 + i);
+                const cipher = String.fromCharCode(65 + ((i + 3) % 26));
+                html += `<span class="mapping-pair">${plain}<span class="arrow">→</span>${cipher}</span>`;
+            }
+            mapping.innerHTML = html;
+        }
+
+        // ==================== GENERAL SHIFT CIPHER ====================
+        
+        function shiftEncrypt() {
+            const input = document.getElementById('shift-input').value;
+            const shift = parseInt(document.getElementById('shift-value').value) || 0;
+            const result = input.split('').map(c => caesarShift(c, shift)).join('');
+            const output = document.getElementById('shift-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        function shiftDecrypt() {
+            const input = document.getElementById('shift-input').value;
+            const shift = parseInt(document.getElementById('shift-value').value) || 0;
+            const result = input.split('').map(c => caesarShift(c, -shift)).join('');
+            const output = document.getElementById('shift-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        // ==================== AFFINE CIPHER ====================
+        
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function modInverse(a, m) {
+            for (let i = 1; i < m; i++) {
+                if ((a * i) % m === 1) return i;
+            }
+            return -1;
+        }
+
+        function affineEncrypt() {
+            const a = parseInt(document.getElementById('affine-a').value);
+            const b = parseInt(document.getElementById('affine-b').value);
+            const input = document.getElementById('affine-input').value;
+            const errorEl = document.getElementById('affine-a-error');
+
+            if (gcd(a, 26) !== 1) {
+                errorEl.classList.add('show');
+                return;
+            }
+            errorEl.classList.remove('show');
+
+            const result = input.split('').map(c => {
+                if (!/[a-zA-Z]/.test(c)) return c;
+                const base = c === c.toUpperCase() ? 65 : 97;
+                const x = c.charCodeAt(0) - base;
+                const encrypted = ((a * x + b) % 26 + 26) % 26;
+                return String.fromCharCode(encrypted + base);
+            }).join('');
+
+            const output = document.getElementById('affine-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        function affineDecrypt() {
+            const a = parseInt(document.getElementById('affine-a').value);
+            const b = parseInt(document.getElementById('affine-b').value);
+            const input = document.getElementById('affine-input').value;
+            const errorEl = document.getElementById('affine-a-error');
+
+            if (gcd(a, 26) !== 1) {
+                errorEl.classList.add('show');
+                return;
+            }
+            errorEl.classList.remove('show');
+
+            const aInv = modInverse(a, 26);
+            const result = input.split('').map(c => {
+                if (!/[a-zA-Z]/.test(c)) return c;
+                const base = c === c.toUpperCase() ? 65 : 97;
+                const y = c.charCodeAt(0) - base;
+                const decrypted = ((aInv * (y - b)) % 26 + 26) % 26;
+                return String.fromCharCode(decrypted + base);
+            }).join('');
+
+            const output = document.getElementById('affine-output');
+            output.textContent = result || 'Result will appear here...';
+            output.classList.toggle('empty', !result);
+        }
+
+        // ==================== TRANSPOSITION CIPHER ====================
+        
+        function getColumnOrder(key) {
+            // If key is numeric, use it directly
+            if (!isNaN(key)) {
+                return Array.from({length: parseInt(key)}, (_, i) => i);
+            }
+            
+            // Otherwise, sort characters and get original indices
+            const chars = key.toUpperCase().split('');
+            const indexed = chars.map((c, i) => ({char: c, index: i}));
+            indexed.sort((a, b) => a.char.localeCompare(b.char));
+            return indexed.map(item => item.index);
+        }
+
+        function transpositionEncrypt() {
+            const key = document.getElementById('transposition-key').value;
+            const input = document.getElementById('transposition-input').value.replace(/\s/g, '');
+            
+            if (!key || !input) {
+                document.getElementById('transposition-output').textContent = 'Result will appear here...';
+                document.getElementById('transposition-output').classList.add('empty');
+                return;
+            }
+
+            const numCols = !isNaN(key) ? parseInt(key) : key.length;
+            const colOrder = getColumnOrder(key);
+            
+            // Create grid
+            const numRows = Math.ceil(input.length / numCols);
+            const grid = [];
+            for (let i = 0; i < numRows; i++) {
+                grid.push(input.slice(i * numCols, (i + 1) * numCols).padEnd(numCols, 'X').split(''));
+            }
+
+            // Read columns in order
+            let result = '';
+            for (const col of colOrder) {
+                for (let row = 0; row < numRows; row++) {
+                    result += grid[row][col];
+                }
+            }
+
+            const output = document.getElementById('transposition-output');
+            output.textContent = result;
+            output.classList.remove('empty');
+        }
+
+        function transpositionDecrypt() {
+            const key = document.getElementById('transposition-key').value;
+            const input = document.getElementById('transposition-input').value.replace(/\s/g, '');
+            
+            if (!key || !input) {
+                document.getElementById('transposition-output').textContent = 'Result will appear here...';
+                document.getElementById('transposition-output').classList.add('empty');
+                return;
+            }
+
+            const numCols = !isNaN(key) ? parseInt(key) : key.length;
+            const colOrder = getColumnOrder(key);
+            const numRows = Math.ceil(input.length / numCols);
+            
+            // Calculate column lengths
+            const colLengths = Array(numCols).fill(numRows);
+            const extraCells = numCols * numRows - input.length;
+            for (let i = colOrder.length - 1; i >= 0 && extraCells > 0; i--) {
+                colLengths[colOrder[i]]--;
+            }
+
+            // Fill grid column by column
+            const grid = Array(numRows).fill(null).map(() => Array(numCols).fill(''));
+            let pos = 0;
+            for (const col of colOrder) {
+                for (let row = 0; row < colLengths[col]; row++) {
+                    grid[row][col] = input[pos++];
+                }
+            }
+
+            // Read row by row
+            let result = '';
+            for (let row = 0; row < numRows; row++) {
+                for (let col = 0; col < numCols; col++) {
+                    result += grid[row][col];
+                }
+            }
+
+            const output = document.getElementById('transposition-output');
+            output.textContent = result.replace(/X+$/, ''); // Remove padding
+            output.classList.remove('empty');
+        }
+
+        // ==================== RSA CRYPTOGRAPHY ====================
+        
+        function isPrime(n) {
+            if (n < 2) return false;
+            if (n === 2) return true;
+            if (n % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function modPow(base, exp, mod) {
+            let result = 1;
+            base = base % mod;
+            while (exp > 0) {
+                if (exp % 2 === 1) {
+                    result = (result * base) % mod;
+                }
+                exp = Math.floor(exp / 2);
+                base = (base * base) % mod;
+            }
+            return result;
+        }
+
+        function rsaEncrypt() {
+            const p = parseInt(document.getElementById('rsa-p').value);
+            const q = parseInt(document.getElementById('rsa-q').value);
+            const m = parseInt(document.getElementById('rsa-message').value);
+            
+            const pError = document.getElementById('rsa-p-error');
+            const qError = document.getElementById('rsa-q-error');
+            const msgError = document.getElementById('rsa-msg-error');
+            
+            pError.classList.remove('show');
+            qError.classList.remove('show');
+            msgError.classList.remove('show');
+
+            if (!isPrime(p)) {
+                pError.classList.add('show');
+                return;
+            }
+            if (!isPrime(q)) {
+                qError.classList.add('show');
+                return;
+            }
+
+            const n = p * q;
+            const phi = (p - 1) * (q - 1);
+            
+            if (m >= n) {
+                msgError.classList.add('show');
+                return;
+            }
+
+            // Choose e (commonly 3, 5, 17, 257, 65537)
+            let e = 3;
+            while (gcd(e, phi) !== 1 && e < phi) {
+                e += 2;
+            }
+
+            // Calculate d (modular inverse of e)
+            let d = 1;
+            while ((e * d) % phi !== 1) {
+                d++;
+            }
+
+            // Encrypt: c = m^e mod n
+            const c = modPow(m, e, n);
+
+            // Display results
+            document.getElementById('rsa-public-key').textContent = `(${e}, ${n})`;
+            document.getElementById('rsa-private-key').textContent = `(${d}, ${n})`;
+            document.getElementById('rsa-original').textContent = m;
+            document.getElementById('rsa-encrypted').textContent = c;
+            document.getElementById('rsa-decrypted').textContent = '-';
+
+            // Show calculation steps
+            const stepsHtml = `
+                <h6><i class="fas fa-calculator"></i> Calculation Steps</h6>
+                <div class="calc-step">n = p × q = ${p} × ${q} = ${n}</div>
+                <div class="calc-step">φ(n) = (p-1) × (q-1) = ${p-1} × ${q-1} = ${phi}</div>
+                <div class="calc-step">Choose e = ${e} (gcd(${e}, ${phi}) = 1)</div>
+                <div class="calc-step">Compute d = ${d} (since ${e} × ${d} mod ${phi} = 1)</div>
+                <div class="calc-step">Encrypt: c = ${m}^${e} mod ${n} = ${c}</div>
+            `;
+            document.getElementById('rsa-steps').innerHTML = stepsHtml;
+            document.getElementById('rsa-output').style.display = 'block';
+
+            // Store values for decryption
+            window.rsaD = d;
+            window.rsaN = n;
+            window.rsaC = c;
+        }
+
+        function rsaDecrypt() {
+            if (typeof window.rsaD === 'undefined') {
+                alert('Please encrypt a message first!');
+                return;
+            }
+
+            const decrypted = modPow(window.rsaC, window.rsaD, window.rsaN);
+            document.getElementById('rsa-decrypted').textContent = decrypted;
+
+            // Add decryption step
+            const stepsDiv = document.getElementById('rsa-steps');
+            const newStep = document.createElement('div');
+            newStep.className = 'calc-step';
+            newStep.innerHTML = `Decrypt: m = ${window.rsaC}^${window.rsaD} mod ${window.rsaN} = ${decrypted}`;
+            stepsDiv.appendChild(newStep);
+        }
+
+        // ==================== VIGENÈRE CIPHER ====================
+        
+        function vigenereEncrypt() {
+            const key = document.getElementById('vigenere-key').value.toUpperCase().replace(/[^A-Z]/g, '');
+            const input = document.getElementById('vigenere-input').value;
+            
+            if (!key) {
+                alert('Please enter a keyword');
+                return;
+            }
+
+            let keyIndex = 0;
+            const result = input.split('').map(c => {
+                if (!/[a-zA-Z]/.test(c)) return c;
+                const base = c === c.toUpperCase() ? 65 : 97;
+                const x = c.charCodeAt(0) - base;
+                const k = key.charCodeAt(keyIndex % key.length) - 65;
+                const encrypted = (x + k) % 26;
+                keyIndex++;
+                return String.fromCharCode(encrypted + base);
+            }).join('');
+
+            const output = document.getElementById('vigenere-output');
+            output.textContent = result;
+            output.classList.remove('empty');
+        }
+
+        function vigenereDecrypt() {
+            const key = document.getElementById('vigenere-key').value.toUpperCase().replace(/[^A-Z]/g, '');
+            const input = document.getElementById('vigenere-input').value;
+            
+            if (!key) {
+                alert('Please enter a keyword');
+                return;
+            }
+
+            let keyIndex = 0;
+            const result = input.split('').map(c => {
+                if (!/[a-zA-Z]/.test(c)) return c;
+                const base = c === c.toUpperCase() ? 65 : 97;
+                const x = c.charCodeAt(0) - base;
+                const k = key.charCodeAt(keyIndex % key.length) - 65;
+                const decrypted = (x - k + 26) % 26;
+                keyIndex++;
+                return String.fromCharCode(decrypted + base);
+            }).join('');
+
+            const output = document.getElementById('vigenere-output');
+            output.textContent = result;
+            output.classList.remove('empty');
+        }
+
+        // ==================== BASE64 ENCODING ====================
+        
+        function base64Encode() {
+            const input = document.getElementById('base64-input').value;
+            try {
+                const result = btoa(input);
+                const output = document.getElementById('base64-output');
+                output.textContent = result;
+                output.classList.remove('empty');
+            } catch (e) {
+                alert('Error encoding: Input contains non-ASCII characters');
+            }
+        }
+
+        function base64Decode() {
+            const input = document.getElementById('base64-input').value;
+            try {
+                const result = atob(input);
+                const output = document.getElementById('base64-output');
+                output.textContent = result;
+                output.classList.remove('empty');
+            } catch (e) {
+                alert('Error decoding: Invalid Base64 input');
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaesarMapping();
+        });
+    </script>
+</body>
+</html>
