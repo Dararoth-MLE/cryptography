@@ -75,16 +75,21 @@
 
         .logo-container {
             background: white;
-            padding: 0.25rem;
+            padding: 0;
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            width: 80px;
+            height: 80px;
         }
 
         .logo-container img {
-            height: 100px;
-            width: auto;
+            idth: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: scale(1.42);
             display: block;
         }
 
